@@ -10,22 +10,22 @@ class LCA_DAGTest {
 	@Test
 	void testConstructor() {
 		LCA_DAG dag1 = new LCA_DAG(6);
-		assertEquals("Testing Constructor",6,dag1.V);
+		assertEquals("Testing Constructor", 6, dag1.V);
 		try {
 			LCA_DAG dag2 = new LCA_DAG(-1);
-		}catch(IllegalArgumentException e) {
-			//expected
-		} 
-		
-	} 
-	
+		} catch (IllegalArgumentException e) {
+			// expected
+		}
+
+	}
+
 	@Test
 	void testV() {
 		LCA_DAG dag1 = new LCA_DAG(5);
 		int v = dag1.V();
-		assertEquals("Testing V()",5,v);	 
+		assertEquals("Testing V()", 5, v);
 	}
- 
+
 	@Test
 	void testEandAddEdge() {
 		LCA_DAG dag1 = new LCA_DAG(4);
@@ -33,34 +33,48 @@ class LCA_DAGTest {
 		dag1.addEdge(2, 3);
 		dag1.addEdge(3, 1);
 		int e = dag1.E();
-		assertEquals("Testing E() and addEdge()",e,3);
-		
-		//test validateVertex exception
+		assertEquals("Testing E() and addEdge()", e, 3);
+
+		// test validateVertex exception
 		try {
 			dag1.addEdge(5, 4);
-		}catch(IllegalArgumentException e1) {
-			//catch exception
-		} 
-		
+		} catch (IllegalArgumentException e1) {
+			// catch exception
+		}
+
 	}
-	
+
 	@Test
-	void testAcyclic(){
+	void testAcyclic() {
 		LCA_DAG dag1 = new LCA_DAG(5);
 		dag1.addEdge(1, 3);
 		dag1.addEdge(1, 4);
 		dag1.addEdge(3, 4);
 		dag1.addEdge(2, 3);
 		dag1.isAcyclic();
-		assertTrue("Check for acyclic",dag1.checkDAG);
-		//create cycle and check again
+		assertTrue("Check for acyclic", dag1.checkDAG);
+		// create cycle and check again
 		dag1.addEdge(3, 4);
 		dag1.addEdge(4, 1);
-		dag1.isAcyclic(); 
-		assertFalse("Confirm cycle has been created(no longer acyclic)",dag1.checkDAG);
-		
-		
+		dag1.isAcyclic();
+		assertFalse("Confirm cycle has been created(no longer acyclic)", dag1.checkDAG);
+
 	}
-	
-	
+
+	@Test
+	void testLCA() {
+		LCA_DAG dag1 = new LCA_DAG(8);
+		dag1.addEdge(1, 2);
+		dag1.addEdge(1, 3);
+		dag1.addEdge(2, 4);
+		dag1.addEdge(2, 5);
+		dag1.addEdge(5, 7);
+		dag1.addEdge(3, 6);
+		assertEquals("Assert LCA(2,3) is 1", dag1.LCA(2, 3), 1);
+		assertEquals("Assert LCA(4,7) is 2", dag1.LCA(4, 7), 2);
+		assertEquals("Assert LCA(7,6) is 1", dag1.LCA(7, 6), 1);
+		
+
+	}
+
 }
