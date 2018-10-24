@@ -63,6 +63,10 @@ class LCA_DAGTest {
 
 	@Test
 	void testLCA() {
+		//test LCA on empty graph
+		LCA_DAG empty = new LCA_DAG(200);
+		assertEquals("Testing LCA on empty graph.",empty.LCA(1, 3),-1);
+
 		LCA_DAG dag1 = new LCA_DAG(8);
 		dag1.addEdge(1, 2);
 		dag1.addEdge(1, 3);
@@ -74,7 +78,24 @@ class LCA_DAGTest {
 		assertEquals("Assert LCA(4,7) is 2", dag1.LCA(4, 7), 2);
 		assertEquals("Assert LCA(7,6) is 1", dag1.LCA(7, 6), 1);
 		
+		//try LCA on graph that isn't acyclic
+		dag1.addEdge(2, 3);
+		dag1.addEdge(3, 1);
+		assertEquals("Testing LCA on non-acyclic graph.",dag1.LCA(1, 3),-1);
+		
+		//Test when there are no common Ancestors
+		LCA_DAG dag2 = new LCA_DAG(7);
+		dag2.addEdge(1, 5);
+		dag2.addEdge(2, 4);
+		dag2.addEdge(4, 5);
+		dag2.addEdge(3, 6);
+		assertEquals("Testing LCA with no common ancestors.",dag2.LCA(1, 3),-1);
 
+
+
+
+
+		
 	}
 
 }
