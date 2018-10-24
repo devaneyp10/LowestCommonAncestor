@@ -1,4 +1,6 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
@@ -21,11 +23,11 @@ class LCA_DAGTest {
 	void testV() {
 		LCA_DAG dag1 = new LCA_DAG(5);
 		int v = dag1.V();
-		assertEquals("Testing V()",5,v);	
+		assertEquals("Testing V()",5,v);	 
 	}
  
 	@Test
-	void testE() {
+	void testEandAddEdge() {
 		LCA_DAG dag1 = new LCA_DAG(4);
 		dag1.addEdge(1, 2);
 		dag1.addEdge(2, 3);
@@ -38,7 +40,27 @@ class LCA_DAGTest {
 			dag1.addEdge(5, 4);
 		}catch(IllegalArgumentException e1) {
 			//catch exception
-		}
+		} 
 		
 	}
+	
+	@Test
+	void testAcyclic(){
+		LCA_DAG dag1 = new LCA_DAG(5);
+		dag1.addEdge(1, 3);
+		dag1.addEdge(1, 4);
+		dag1.addEdge(3, 4);
+		dag1.addEdge(2, 3);
+		dag1.isAcyclic();
+		assertTrue("Check for acyclic",dag1.checkDAG);
+		//create cycle and check again
+		dag1.addEdge(3, 4);
+		dag1.addEdge(4, 1);
+		dag1.isAcyclic(); 
+		assertFalse("Confirm cycle has been created(no longer acyclic)",dag1.checkDAG);
+		
+		
+	}
+	
+	
 }
